@@ -4,32 +4,33 @@ import { useState } from 'react';
 
 export default function App() {
   // Inicializar variables de estado
-  const [counterUS, setcounterUS]=useState(5);
+  const [counterUS, setcounterUS] = useState(5);
 
-  let addCont=()=>{
+  let addCont = () => {
     // Asignar valor a variable de estado
-    setcounterUS( counterUS+1 )
-    console.log("counterUS: "+ counterUS);
+    setcounterUS(counterUS + 1)
+    console.log("counterUS: " + counterUS);
   }
-  let reduceCont=()=>{
+  let reduceCont = () => {
     // Asignar valor a variable de estado
-    if(counterUS<=0){ 
+    if (counterUS <= 0) {
       Alert.alert("NO puede ser menor a cero")
-      return }
-    setcounterUS( counterUS-1 )
+      return
+    }
+    setcounterUS(counterUS - 1)
   }
 
   return (
     <View style={styles.container}>
       {/* App */}
-      <Text>CounterUS: { counterUS }</Text>
+      <Text>CounterUS: {counterUS}</Text>
       <StatusBar style="auto" />
 
       <Button title='Contador'
-              onPress={ addCont }/>
+        onPress={addCont} />
 
       <Button title='Reducir'
-              onPress={ reduceCont }/>
+        onPress={reduceCont} />
     </View>
   );
 }

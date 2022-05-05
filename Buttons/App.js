@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 
 export default function App() {
-  let nameButton="Mi boton"
+  let nameButton = "Mi boton"
   let greeting = () => {
-    Alert.alert("Title","Hello since funcion");
+    Alert.alert("Title", "Hello since funcion");
   }
 
   return (
@@ -13,12 +13,12 @@ export default function App() {
       <StatusBar style="auto" />
       {/* Iniciar boton */}
       <Button title={nameButton}
-              onPress={()=>{ 
-                Alert.alert("Title","Hello word")
-              }}/>
+        onPress={() => {
+          Alert.alert("Title", "Hello word")
+        }} />
 
       <Button title="OK"
-              onPress={()=>{ greeting() }}/>
+        onPress={() => { greeting() }} />
     </View>
   );
 }

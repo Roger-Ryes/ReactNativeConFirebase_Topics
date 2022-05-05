@@ -29,3 +29,29 @@ Archivo TS
 
     // Mostrar en el container
     <Text>CounterUS { counterUS }</Text>
+
+## TextInput
+
+    import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
+    var vallueText = "Ingrese nombre"
+    var [varName, setvarName] = useState("");
+
+    <TextInput
+            value={varName}
+            placeholder={vallueText}
+            style={styles.textBox}
+            onChangeText={(val) => {
+            (val.includes('!'))?Alert.alert("Info", "No agregar '!'"):setvarName(val)
+            }}
+            onEndEditing={()=>{ greeting() }}
+            />
+
+    const styles = StyleSheet.create({
+    textBox: {
+        borderColor: "gray",
+        borderWidth: 1,
+        height: 40,
+        margin: 12,
+        padding: 10,
+    }
+    });
