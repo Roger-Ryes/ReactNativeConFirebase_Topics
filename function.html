@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="function.js"></script>
+    </head>
+    <body>
+        <input id="value1" type="text">
+        <input id="value2" type="text">
+        
+        <input id="btn" type="button" value="Sumar" onclick="execute(sum, findMinorValue)">
+        <input id="btn" type="button" value="Restar" onclick="execute(rest, (x,y)=>{
+            let greater = (x<y)?x:y;
+            alert('Mayor: '+ greater)
+        })">
+    </body>
+</html>
