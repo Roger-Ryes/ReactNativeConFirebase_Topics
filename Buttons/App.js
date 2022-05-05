@@ -11,7 +11,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>BasicApp! app perron</Text>
       <StatusBar style="auto" />
-
+      {/* Iniciar boton */}
       <Button title={nameButton}
               onPress={()=>{ 
                 Alert.alert("Title","Hello word")
