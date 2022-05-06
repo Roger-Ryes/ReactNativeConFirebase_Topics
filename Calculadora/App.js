@@ -2,26 +2,32 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
+
 const Calculadora = (prop) => {
   const [val1, setVal1] = useState(0);
   const [val2, setVal2] = useState(0);
   var [res, setRes] = useState(0);
-  let typeOperation = "+";
-  let btnOperation = "SUMAR";
 
-  if (prop.operation == "subtraction") {
-    typeOperation = "-";
-    btnOperation = "RESTAR"
+  const typesOper = {
+    "subtraction": { operation: "-", btn: "RESTA" },
+    "sum": { operation: "+", btn: "SUMA" },
+    "multiplication": { operation: "*", btn: "MULTIPLICAR" },
+    "division": { operation: "/", btn: "DIVIDIR" }
   }
+
+  let typeOperation = typesOper[prop.operation].operation;
+  let btnOperation = typesOper[prop.operation].btn;
 
   let mathOperation = () => {
     if (prop.operation == "sum") {
       setRes(parseInt(val1) + parseInt(val2))
-    } else if(prop.operation == "subtraction"){
+    } else if (prop.operation == "subtraction") {
       setRes(parseInt(val1) - parseInt(val2))
+    } else if (prop.operation == "multiplication") {
+      setRes(parseInt(val1) * parseInt(val2))
     }
-
   }
+
   let clean = () => {
     setRes(0);
     setVal1(0);
@@ -30,8 +36,6 @@ const Calculadora = (prop) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Calculadora</Text>
-
       <View style={styles.row}>
         <TextInput
           keyboardType='numeric'
@@ -76,8 +80,11 @@ const Calculadora = (prop) => {
 export default function App() {
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>Calculadora</Text>
+
       <Calculadora operation="sum" />
       <Calculadora operation="subtraction" />
+      <Calculadora operation="multiplication" />
     </View>
   )
 }
