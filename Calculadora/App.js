@@ -2,13 +2,25 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default function App() {
+const Calculadora = (prop) => {
   const [val1, setVal1] = useState(0);
   const [val2, setVal2] = useState(0);
   var [res, setRes] = useState(0);
+  let typeOperation = "+";
+  let btnOperation = "SUMAR";
 
-  let sum = () => {
-    setRes(parseInt(val1) + parseInt(val2))
+  if (prop.operation == "subtraction") {
+    typeOperation = "-";
+    btnOperation = "RESTAR"
+  }
+
+  let mathOperation = () => {
+    if (prop.operation == "sum") {
+      setRes(parseInt(val1) + parseInt(val2))
+    } else if(prop.operation == "subtraction"){
+      setRes(parseInt(val1) - parseInt(val2))
+    }
+
   }
   let clean = () => {
     setRes(0);
@@ -30,7 +42,7 @@ export default function App() {
             setVal1(x)
           }} />
 
-        <Text style={styles.value}>+</Text>
+        <Text style={styles.value}>{typeOperation}</Text>
 
         <TextInput
           keyboardType='numeric'
@@ -43,8 +55,8 @@ export default function App() {
       </View>
       <View style={styles.row}>
         <Button
-          title='Sumar'
-          onPress={() => { sum() }} />
+          title={btnOperation}
+          onPress={() => { mathOperation() }} />
         <Text> </Text>
         <Button
           title='Limpiar'
@@ -58,6 +70,16 @@ export default function App() {
       <StatusBar style="auto" />
     </View>
   );
+}
+
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Calculadora operation="sum" />
+      <Calculadora operation="subtraction" />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
