@@ -7,7 +7,7 @@ export default function App() {
   var [varName, setvarName] = useState("");
   var [varLastName, setvarLastName] = useState("");
 
-  let greeting = ()=>{
+  let greeting = () => {
     Alert.alert("", `Bienvenido ${varName} ${varLastName}`)
   }
   let greetingText = `Bienvenido ${varName} ${varLastName}`;
@@ -22,19 +22,19 @@ export default function App() {
         placeholder={vallueText}
         style={styles.textBox}
         onChangeText={(val) => {
-          (val.includes('!'))?Alert.alert("Info", "No agregar '!'"):setvarName(val)
+          (val.includes('!')) ? Alert.alert("Info", "No agregar '!'") : setvarName(val)
         }}
-         onEndEditing={()=>{ greeting() }}
-        />
+        onEndEditing={() => { greeting() }}
+      />
       <TextInput
         value={varLastName}
         placeholder="Ingrese apellido"
         style={styles.textBox}
         onChangeText={(val) => {
           setvarLastName(val)
-        }} 
-        onEndEditing={()=>{ greeting() }}
-        />
+        }}
+        onEndEditing={() => { greeting() }}
+      />
 
     </View>
   );
