@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 
 export default function App() {
@@ -13,11 +13,12 @@ export default function App() {
 
 
 const CalculadoraImc = (prop) => {
-  const [weight, setWeight] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
   const [message, setMessage] = useState("");
-  weightText = "Peso";
-  heightText = "Altura";
+  let weightText = "Peso";
+  let heightText = "Altura";
+  let dataText = "0";
 
   let calcuImc = () => {
     let weightInt = parseInt(weight), heightInt = parseInt(height)
@@ -33,29 +34,31 @@ const CalculadoraImc = (prop) => {
     setMessage(msg)
   }
   let clean = () => {
-    setHeight(0); setWeight(0); setMessage("")
+    setHeight(0); setWeight(0); setMessage(""); dataText = "";
   }
 
   return (
     <View style={styles.container}>
       <Text style={[styles.textTitle]}>IMC</Text>
       <View style={styles.flexRow}>
-        <TextInput style={[styles.textSub]}
-          keyboardType="numeric"
-          value={weight.toString() | "0"}
-          placeholder={weightText}
-          onChangeText={(val) => { setWeight(parseInt(val)) }}
-        ></TextInput>
-        <Text style={[styles.textSub]}>kg</Text>
-      </View>
-      <View style={styles.flexRow}>
-        <TextInput style={[styles.textSub]}
-          keyboardType="numeric"
-          value={height.toString() | "0"}
-          placeholder={heightText}
-          onChangeText={(val) => { setHeight(val) }}
-        ></TextInput>
-        <Text style={[styles.textSub]}>cm</Text>
+        <View style={styles.flexRow}>
+          <TextInput style={[styles.textSub]}
+            keyboardType="numeric"
+            value={weight.toString()}
+            placeholder={weightText}
+            onChangeText={(val) => { setWeight(val) }}
+          ></TextInput>
+          <Text style={[styles.textSub]}>kg</Text>
+        </View>
+        <View style={styles.flexRow}>
+          <TextInput style={[styles.textSub]}
+            keyboardType="numeric"
+            value={height.toString()}
+            placeholder={heightText}
+            onChangeText={(val) => { setHeight(val) }}
+          ></TextInput>
+          <Text style={[styles.textSub]}>cm</Text>
+        </View>
       </View>
       <View style={styles.flexColumn}>
         <Button
@@ -93,25 +96,25 @@ const styles = StyleSheet.create({
     color: "#666",
     padding: 10,
   },
-  info:{
+  info: {
     color: "#999",
     fontWeight: 'bold',
     fontSize: 15,
     textAlign: "center",
-    margin:15
+    margin: 15
   },
   flexColumn: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     flexWrap: "wrap",
     // margin: 10
   },
-  flexRow:{
+  flexRow: {
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "stretch",
     flexWrap: "wrap",
     margin: 10
   }
-  
+
 });
