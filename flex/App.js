@@ -3,12 +3,23 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   const values = [
-    { data: "data 1", val: "va" },
-    { data: "data 2", val: "vb" },
-    { data: "data 2", val: "vb" },
+    { data: "Data 1", val: "Va" },
+    { data: "Data 2", val: "Vb" },
+    { data: "Data 2", val: "Vb" },
   ]
   const dataText = (obj) => {
-    return (<Text style={styles.secondItem}>{obj.item.data}</Text>)
+    return (
+      <View style={styles.secondItem}>
+        <View style={styles.areaIndice}>
+          <Text>{obj.index}</Text>
+        </View>
+        <View style={styles.areaContenido}>
+          <Text>{obj.item.data}</Text>
+          <Text>{obj.item.val}</Text>
+        </View>
+      </View>
+
+    )
   }
 
   return (
@@ -39,8 +50,9 @@ const styles = StyleSheet.create({
   },
   secondItem: {
     flex: 10,
-    padding: 10,
+    padding: 5,
     backgroundColor: "brown",
+    flexDirection: "row"
   },
   footer: {
     flex: 0,
@@ -49,5 +61,17 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignContent: "center"
+  },
+  areaIndice: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    backgroundColor: "forestgreen"
+  },
+  areaContenido: {
+    padding: 3,
+    backgroundColor: "gold",
+    flex: 5
   }
 });
