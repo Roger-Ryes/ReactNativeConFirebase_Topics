@@ -2,43 +2,77 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
 import { StyleSheet, Text, View, FlatList, TextInput, Button } from 'react-native';
 
-
+let esNuevo = true;
+let indexPerson;
+let cedulaEditable = true;
+let footer = "Todos los derechos reservado Roger Reyes ©"
 let Personas = [
   { nombre: "Pepe 1", apellido: "Perez 1", cedula: "172059879" },
   { nombre: "Azul 2", apellido: "Zabala 2", cedula: "172059879" },
   { nombre: "Ariana 2", apellido: "Cebilla 3", cedula: "172059879" },
 ];
 
-
-let ItemPerson = (prop) => {
-  return (
-    <View style={styles.secondItem}>
-      <View style={styles.areaIndice}>
-        <Text>{prop.index}</Text>
-      </View>
-      <View style={styles.areaContenido}>
-        <Text>{prop.item.nombre} {prop.item.apellido}</Text>
-        <Text>{prop.item.cedula}</Text>
-      </View>
-    </View>
-  )
-};
-
 export default function App() {
   const [tiCedula, setTiCedula] = useState();
   const [tiNombre, setTiNombre] = useState();
   const [tiApellido, setTiApellido] = useState();
+  const [numClientes, setNumClientes] = useState(Personas.length);
 
   const guardarPersona = () => {
-    var jva = { nombre: tiNombre, apellido: tiApellido, cedula: tiCedula };
-    Personas.push(jva);
+    if (esNuevo) {
+      var jva = { nombre: tiNombre, apellido: tiApellido, cedula: tiCedula };
+      Personas.push(jva);
+    } else {
+      Personas[indexPerson] = { nombre: tiNombre, apellido: tiApellido, cedula: tiCedula };
+    }
+    setNumClientes(Personas.length)
     limpiar()
   }
   const limpiar = () => {
     setTiApellido(null);
     setTiNombre(null);
     setTiCedula(null);
+    esNuevo = true;
+    cedulaEditable = true;
   }
+  const editPerson = (person, index) => {
+    cedulaEditable = false;
+    esNuevo = false;
+    indexPerson = index;
+    setTiCedula(person.cedula);
+    setTiApellido(person.apellido);
+    setTiNombre(person.nombre);
+  }
+  const deletePerson = (index) => {
+    Personas.splice(index, 1)
+    setNumClientes(Personas.length)
+  }
+
+  let ItemPerson = (prop) => {
+
+    return (
+      <View style={styles.secondItem}>
+        <View style={styles.areaIndice}>
+          <Text>{prop.index}</Text>
+        </View>
+        <View style={styles.areaContenido}>
+          <Text>{prop.item.nombre} {prop.item.apellido}</Text>
+          <Text>{prop.item.cedula}</Text>
+        </View>
+        <View style={styles.areaBtnList}>
+          <Button
+            title='E'
+            color={"green"}
+            onPress={() => { editPerson(prop.item, prop.index) }}></Button>
+          <Button
+            title='X'
+            color={"red"}
+            onPress={() => { deletePerson(prop.index) }}></Button>
+        </View>
+      </View>
+    )
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.itemPerson}>Flex</Text>
@@ -57,20 +91,22 @@ export default function App() {
         placeholder='Ingrese cedula'
         onChangeText={(val) => { setTiCedula(val) }}
         keyboardType="numeric"
+        editable={cedulaEditable}
       ></TextInput>
       <View style={styles.areaBtn}>
         <Button
-          onPress={() => { guardarPersona() }}
-          title='Guardar'></Button>
+          onPress={() => { if (tiNombre != null && tiApellido != null && tiCedula != null) { guardarPersona() } }}
+          title="Guardar"></Button>
         <Button
-          onPress={() => { }}
-          title='Limpiar'></Button>
+          title='Limpiar'
+          onPress={() => { limpiar() }}></Button>
       </View>
+      <Text>Clientes: {numClientes}</Text>
       <FlatList
         data={Personas}
         renderItem={(obj) => { return <ItemPerson index={obj.index} item={obj.item} /> }}
       ></FlatList>
-      <Text style={styles.footer}>Footer</Text>
+      <Text style={styles.footer}>{footer}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -128,5 +164,12 @@ const styles = StyleSheet.create({
     flex: 0,
     margin: 10,
     justifyContent: "space-around",
+  },
+  areaBtnList: {
+    flexDirection: "row",
+    flex: 2,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    // backgroundColor: "red"
   }
 });
