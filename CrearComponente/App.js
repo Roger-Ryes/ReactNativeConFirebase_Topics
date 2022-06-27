@@ -1,15 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
-import { StyleSheet, Text, View, FlatList, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TextInput, Button, Alert } from 'react-native';
 
 let esNuevo = true;
 let indexPerson;
 let cedulaEditable = true;
 let footer = "Todos los derechos reservado Roger Reyes ©"
 let Personas = [
-  { nombre: "Pepe 1", apellido: "Perez 1", cedula: "172059879" },
-  { nombre: "Azul 2", apellido: "Zabala 2", cedula: "172059879" },
-  { nombre: "Ariana 2", apellido: "Cebilla 3", cedula: "172059879" },
+  { nombre: "Pepe 1", apellido: "Perez 1", cedula: "172060879" },
+  { nombre: "Azul 2", apellido: "Zabala 2", cedula: "172059123" },
+  { nombre: "Ariana 2", apellido: "Cebilla 3", cedula: "172789456" },
 ];
 
 export default function App() {
@@ -21,6 +21,11 @@ export default function App() {
   const guardarPersona = () => {
     if (esNuevo) {
       var jva = { nombre: tiNombre, apellido: tiApellido, cedula: tiCedula };
+      // console.log(existePersona(tiCedula))
+      if (existePersona(tiCedula)) {
+        Alert.alert("Usuario ya existe");
+        return
+      }
       Personas.push(jva);
     } else {
       Personas[indexPerson] = { nombre: tiNombre, apellido: tiApellido, cedula: tiCedula };
@@ -46,6 +51,13 @@ export default function App() {
   const deletePerson = (index) => {
     Personas.splice(index, 1)
     setNumClientes(Personas.length)
+  }
+  const existePersona = (cedula) => {
+    let value = false;
+    for (var i = 0; i < Personas.length; ++i) {
+      if (Personas[i].cedula == cedula) { value = true };
+    }
+    return value;
   }
 
   let ItemPerson = (prop) => {
