@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Alert, FlatList, StyleSheet, Text, TextInput, View, ScrollView, Keyboard, Button } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, TextInput, View, ScrollView, Keyboard, TouchableHighlight, Button } from 'react-native';
 
 let productos = [
   { nombre: "Doritos", categoria: "Snacks", precioCompra: 0.40, precioVenta: 0.45, id: 100 },
@@ -102,6 +102,14 @@ const Form = (prop) => {
   )
 }
 
+function EditBtn() {
+  return (
+    <View>
+      <Text>E</Text>
+    </View>
+  );
+}
+
 // PRODUCTS LIST
 const Products = (prop) => {
   const [isFetching, setIsFetching] = useState(false);
@@ -135,6 +143,7 @@ const Products = (prop) => {
     setLengthProduct(productos.length)
     setIndex(null);
   }
+
   let products = (obj) => {
     return (
       <View style={styles.borderContent}>
@@ -146,9 +155,12 @@ const Products = (prop) => {
           <Text>USD {obj.item.precioVenta}</Text>
         </View>
         <View style={styles.prodListBtn}>
-          <Button
+          <TouchableHighlight onPress={() => editProduct(obj.index)}>
+            <EditBtn></EditBtn>
+          </TouchableHighlight>
+          {/* <Button
             title='E'
-            onPress={() => { editProduct(obj.index) }} />
+            onPress={() => { editProduct(obj.index) }} /> */}
           <Button
             title='X'
             onPress={() => { deleteProduct(obj.index) }}
