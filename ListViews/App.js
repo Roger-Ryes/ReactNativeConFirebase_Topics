@@ -28,9 +28,7 @@ const FlatListBasic = () => {
     },
   ]
 
-  const renderItem = ({ item }) => (
-    <Text>{item.title}</Text>
-  );
+  const renderItem = ({ item }) => <Text>{item.title}</Text>;
 
   return (
     <View style={styles.container}>
@@ -64,13 +62,9 @@ const SectionListBasic = () => {
     }
   ];
 
-  const sectionListRender = ({ item }) => (
-    <Text>{item}</Text>
-  )
-  const sectionHeaderList = ({ section }) => (
-    <Text style={styles.textBold}>{section.title}</Text>
-  )
-  
+  const sectionListRender = ({ item }) => <Text>{item}</Text>
+  const sectionHeaderList = ({ section }) => <Text style={styles.textBold}>{section.title}</Text>
+
 
   return (
     <View style={styles.container}>
@@ -79,7 +73,7 @@ const SectionListBasic = () => {
         sections={DATA}
         renderItem={sectionListRender}
         // renderSectionHeader={ ({section: {title}})=>(<Text style={styles.textBold}>{title}</Text>) } // Metodo 1
-        renderSectionHeader={ sectionHeaderList } // Metodo 2
+        renderSectionHeader={sectionHeaderList} // Metodo 2
       />
     </View>
   )
@@ -90,7 +84,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    flexDirection:"column",
+    flexDirection: "column",
     justifyContent: "space-around",
     // alignItems: 'center',
     marginTop: StatusBar.currentHeight || 0,
@@ -100,11 +94,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 5
   },
-  textMain:{
+  textMain: {
     fontSize: 20,
     textAlign: "center",
   },
-  textBold:{
+  textBold: {
     fontSize: 18,
     color: "red"
   }

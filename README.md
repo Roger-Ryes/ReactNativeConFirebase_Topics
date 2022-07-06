@@ -55,3 +55,31 @@ Archivo TS
         padding: 10,
     }
     });
+
+# DESTRUCTURING
+    let persona = {
+        nombre = "pepe",
+        apellido = "Lopez",
+        cedula = "123456798"
+    }
+
+    // Sin Destructuring
+    let nombre = persona.nombre;
+    let apellido = persona.apellido;
+
+    // Con Destructuring
+    let {nombre, apellido} = persona;
+
+Tambien se puede aplicar en arreglos
+
+    let numeros = [0,1,2,3,4];
+    // Sin Destructurin
+    let a = numeros[0];
+    let b = numeros[1];
+
+    // Con Destructurin
+    let [a,b] = numeros;
+
+
+# React Native core components
+https://reactnative.dev/docs/components-and-apis
