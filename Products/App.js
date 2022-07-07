@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Alert, FlatList, StyleSheet, Text, TextInput, View, ScrollView, Keyboard, TouchableHighlight, Button } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, TextInput, View, ScrollView, Keyboard, TouchableHighlight, Button, Modal, Pressable, BackHandler } from 'react-native';
 
 let productos = [
   { nombre: "Doritos", categoria: "Snacks", precioCompra: 0.40, precioVenta: 0.45, id: 100 },
@@ -121,6 +121,7 @@ const Products = (prop) => {
   const [edit, setEdit] = useState(true)
   const [index, setIndex] = useState()
   const [lengthProduct, setLengthProduct] = useState(productos.length)
+  const [showModal, setshowModal] = useState(false)
   let disabledBtn = false;
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -139,11 +140,14 @@ const Products = (prop) => {
     setIndex(index);
   }
   const deleteProduct = (index) => {
-    productos.splice(index, 1);
-    setLengthProduct(productos.length)
-    setIndex(null);
+    setshowModal(true);
+    setIndex(index);
+    
+    // productos.splice(index, 1);
+    // setLengthProduct(productos.length)
+    // setIndex(null);
   }
-
+  
   let products = (obj) => {
     return (
       <View style={styles.borderContent}>
@@ -155,7 +159,11 @@ const Products = (prop) => {
           <Text>USD {obj.item.precioVenta}</Text>
         </View>
         <View style={styles.prodListBtn}>
-          <TouchableHighlight onPress={() => editProduct(obj.index)}>
+          <TouchableHighlight
+            style={styles.editBtn}
+            activeOpacity={0.6}
+            underlayColor="#DDDDDD"
+            onPress={() => editProduct(obj.index)}>
             <EditBtn></EditBtn>
           </TouchableHighlight>
           {/* <Button
@@ -166,6 +174,20 @@ const Products = (prop) => {
             onPress={() => { deleteProduct(obj.index) }}
             disabled={disabledBtn} />
         </View>
+
+        <Modal
+          animationType="slide"
+          visible={showModal}
+          transparent={true}
+          onRequestClose={()=>{setshowModal(false); deleteProduct()}}          
+        >
+          <ShowMessage
+            msg="Seguro quieres eliminar"
+            setshowModal={setshowModal}
+            index={index}
+            setIndex={setIndex}
+            setLengthProduct = {setLengthProduct} />
+        </Modal>
       </View>
     )
   }
@@ -190,6 +212,38 @@ const Products = (prop) => {
         refreshing={isFetching}
         keyExtractor={(item) => { item.id }} />
     </View >
+  )
+}
+
+// Message Modal
+function ShowMessage({ msg, setshowModal, index, setIndex, setLengthProduct }) {
+  const deleteProduct = (index) => {
+    productos.splice(index, 1);
+    setLengthProduct(productos.length)
+    setIndex(null);
+    setshowModal(false);
+  }
+  return (
+    <View style={styles.centeredView}>
+      <View style={styles.modalView}>
+        <Text style={styles.modalText}>{msg}</Text>
+        <View style={styles.modalBtns}>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => { deleteProduct(index) }}
+          >
+            <Text>Si</Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => { setshowModal(false) }}
+          >
+            <Text>No</Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
   )
 }
 
@@ -267,5 +321,45 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     // margin: 2
+  },
+  editBtn: {
+    padding: 12,
+    borderRadius: 20,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "hsla(200, 16%, 100%, 0.30)",
+    borderRadius: 5,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4
+  },
+  button: {
+    borderRadius: 20,
+    padding: 15,
+    margin: 10,
+    elevation: 2
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  modalBtns: {
+    flexDirection: "row",
   }
 });
