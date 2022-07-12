@@ -83,3 +83,10 @@ Tambien se puede aplicar en arreglos
 
 # React Native core components
 https://reactnative.dev/docs/components-and-apis
+
+
+# React Navigation
+https://reactnavigation.org/docs/getting-started/#installation
+
+# React Navigation/Native Stack
+https://reactnavigation.org/docs/hello-react-navigation#creating-a-native-stack-navigator
