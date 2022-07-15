@@ -3,35 +3,22 @@ import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Button, Icon, Input } from "@rneui/themed";
 import { useState } from 'react';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { ListGrades } from './app/screens/ListGrades';
+import { GradeForm } from './app/screens/GradeForm';
+
 export default function App() {
-  const [name, setName] = useState();
+  const Stack = createNativeStackNavigator();
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Input
-        value={name}
-        onChangeText={(val) => { setName(val) }}
-        placeholder="Ingresar Nombre" />
-      <Text>{name}</Text>
-      <Button
-        title="Solid Button"
-        icon={{
-          name: 'baidu',
-          type: 'entypo',
-          size: 15,
-          color: 'white',
-        }}
-        onPress={() => { Alert.alert("Info", "Su nombre es " + name) }} />
-      <Button
-        title="Ok"
-        icon={{
-          name: 'steam',
-          type: 'zocial',
-          size: 15,
-          color: 'black',
-        }} />
-    </View>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="ListGrades" component={ListGrades}/>
+          <Stack.Screen name="GradeForm" component={GradeForm}/>
+        </Stack.Navigator>
+      </NavigationContainer>
   );
 }
 
