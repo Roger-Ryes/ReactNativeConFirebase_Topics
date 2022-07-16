@@ -1,29 +1,41 @@
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Input, Button } from '@rneui/base'
 import { useState } from 'react';
-import { saveGrades } from '../services/GradeServices';
-export const GradeForm = () => {
-    const [subject, setSubject] = useState();
-    const [grade, setGrade] = useState();
+import { saveGrades, updateGrades } from '../services/GradeServices';
+
+
+export const GradeForm = ({ navigation, route }) => {
+    const { subjectPath, gradesPaht, post } = route.params;
+
+    // console.log(JSON.stringify(gradesPaht))
+    const [subject, setSubject] = useState((subjectPath) ? subjectPath : "");
+    const [grade, setGrade] = useState((gradesPaht) ? gradesPaht : "");
     const [errorGrade, setErrorGrade] = useState();
     const [errorSubject, setErrorSubject] = useState();
+
+    const btn = (post) ? "Editar" : "Guardar";
 
     const saveBtn = () => {
         cleanErrors();
         if (!validation()) {
-            let index = saveGrades({ subject, grade });
+            if (post) {
+                updateGrades({ subject: subject, grades: grade })
+            } else {
+                let index = saveGrades({ subject, grades: grade });
+            }
+            navigation.goBack();
+            route.params.fnRefresh();
         }
+
     }
     const validation = () => {
-        if (subject == null) { setErrorSubject('Debe ingresar una materia') }
-        if (isNaN(parseFloat(grade))) { setErrorGrade('Debe ingresar la nota') }
+        let error = false;
+        if (subject == null || subject.length == 0) { setErrorSubject('Debe ingresar una materia'); error = true; }
+        if (isNaN(parseFloat(grade))) { setErrorGrade('Debe ingresar la nota'); error = true; }
         let msgNum = (parseFloat(grade) > 10) ? 'Mayor a 10' :
             (parseFloat(grade) < 0) ? 'Menor a 0' : null;
-        if (msgNum != null) { setErrorGrade(msgNum); }
-        if (subject == null || grade == null || msgNum != null) {
-            return true
-        }
-        return false
+        if (msgNum != null) { setErrorGrade(msgNum); error = true; }
+        return error;
     }
     const cleanErrors = () => {
         setErrorSubject(null);
@@ -39,6 +51,7 @@ export const GradeForm = () => {
                 onChangeText={setSubject}
                 placeholder="Ejemplo"
                 label="Material"
+                disabled={post}
                 errorMessage={errorSubject} />
             <Input
                 value={grade}
@@ -48,7 +61,7 @@ export const GradeForm = () => {
                 errorMessage={errorGrade}
                 keyboardType='numeric' />
             <Button
-                title="Guardar"
+                title={btn}
                 icon={{
                     name: 'save-alt',
                     type: 'MaterialIcons',
