@@ -14,5 +14,5 @@ const firebaseConfig = {
 export const loanConfiguration = () => {
     console.log("Configuration init");
     const app = initializeApp(firebaseConfig);
-    global.db = getFirestore(app);
+    global.DB = getFirestore(app);
 }

@@ -12,17 +12,30 @@ export default function App() {
   loanConfiguration();
   return (
     <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="ProductForm" component={ProductForm} />
-    </Stack.Navigator>
-  </NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#333',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}>
+        <Stack.Screen
+          name="ProductForm"
+          component={ProductForm}
+          options={{ title: 'Formulario Producto' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#222',
     alignItems: 'center',
     justifyContent: 'center',
   },
