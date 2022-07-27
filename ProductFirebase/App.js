@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { loanConfiguration } from './app/utils/FirebaseConfig';
 import { ProductForm } from './app/screens/ProductForm';
+import { ListProducts } from './app/screens/ListProductsForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,14 +15,15 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: {
-            backgroundColor: '#333',
-          },
+          headerStyle: { backgroundColor: '#333', },
           headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+          headerTitleStyle: { fontWeight: 'bold', },
         }}>
+        <Stack.Screen
+          name="ListProductsForm"
+          component={ListProducts}
+          options={{ title: 'Lista Producto' }}
+        />
         <Stack.Screen
           name="ProductForm"
           component={ProductForm}
