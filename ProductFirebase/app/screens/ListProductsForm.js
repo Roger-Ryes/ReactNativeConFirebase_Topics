@@ -2,6 +2,7 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import { ListItem, Avatar } from '@rneui/themed'
 
 import { getDataProducts } from '../services/ProductServices';
+import { SignOut } from '../services/AuthenticationServices';
 import { useState, useEffect } from 'react';
 import { Button, FAB } from '@rneui/base';
 
@@ -31,11 +32,6 @@ export const ListProducts = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* <Button
-                title="Cargar"
-                onPress={loadData}
-                color="green">
-            </Button> */}
             <FlatList
                 data={product}
                 renderItem={renderItem}>

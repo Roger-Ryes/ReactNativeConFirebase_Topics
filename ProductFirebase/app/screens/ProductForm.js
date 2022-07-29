@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Input, Button } from "@rneui/themed";
 import { useState } from 'react';
 import { save } from '../services/ProductServices'
+import { SignOut } from '../services/AuthenticationServices'
 
 export const ProductForm = ({ navigation, route }) => {
     const [code, setCode] = useState();
@@ -22,7 +23,7 @@ export const ProductForm = ({ navigation, route }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.t1}>Formulario</Text>
+            <Text style={styles.t1}>Formulario Productos</Text>
             <Input
                 style={styles.input}
                 value={code}
@@ -47,7 +48,7 @@ export const ProductForm = ({ navigation, route }) => {
                 onChangeText={(val) => { setPrice(val) }}
                 leftIcon={{ name: 'attach-money', type: 'MaterialIcons', color: 'white' }} />
             <Button
-                title="Solid Button"
+                title="Guardar"
                 onPress={saveProduct}
                 color="green" />
         </View>
