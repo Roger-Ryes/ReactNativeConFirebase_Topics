@@ -2,12 +2,16 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import { ListItem, Avatar } from '@rneui/themed'
 
 import { getDataProducts } from '../services/ProductServices';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, FAB } from '@rneui/base';
-
 
 export const ListProducts = ({ navigation }) => {
     const [product, setProduct] = useState([]);
+
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
     const loadData = () => {
         getDataProducts().then(resp => {
@@ -19,8 +23,7 @@ export const ListProducts = ({ navigation }) => {
             <ListItem>
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
-                    <ListItem.Subtitle>Precio: {item.price}</ListItem.Subtitle>
-                    <ListItem.Subtitle>Codigo: {item.code}</ListItem.Subtitle>
+                    <ListItem.Subtitle>Precio: {item.price} {"\t\t\t\t"} Codigo: {item.code}</ListItem.Subtitle>
                 </ListItem.Content>
             </ListItem>
         )
@@ -28,11 +31,11 @@ export const ListProducts = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Button
+            {/* <Button
                 title="Cargar"
                 onPress={loadData}
                 color="green">
-            </Button>
+            </Button> */}
             <FlatList
                 data={product}
                 renderItem={renderItem}>
@@ -42,7 +45,7 @@ export const ListProducts = ({ navigation }) => {
                 icon={{ name: 'add', color: 'white' }}
                 color="#333"
                 onPress={() => {
-                    navigation.navigate("ProductForm")
+                    navigation.navigate("ProductForm", { reloadData: loadData })
                 }}>
             </FAB>
         </View>

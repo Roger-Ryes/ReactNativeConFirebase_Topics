@@ -3,7 +3,7 @@ import { Input, Button } from "@rneui/themed";
 import { useState } from 'react';
 import { save } from '../services/ProductServices'
 
-export const ProductForm = ({ navigation }) => {
+export const ProductForm = ({ navigation, route }) => {
     const [code, setCode] = useState();
     const [name, setName] = useState();
     const [price, setPrice] = useState();
@@ -12,6 +12,7 @@ export const ProductForm = ({ navigation }) => {
         save({ code, name, price: parseFloat(price) });
         clear();
         navigation.goBack();
+        route.params.reloadData();
     }
     const clear = () => {
         setCode(null);
